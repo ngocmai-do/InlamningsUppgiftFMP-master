@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+
+<h2>Edit an existing room</h2>
+
+<form action="#" th:action="@{/room/update}" th:object="${room}"  method="post" >
+
+    <label for="type">Type:</label><br>
+    <select id="type" th:field="*{type}">
+        <option th:each="t : ${T(com.example.inlamningsuppgiftfmp.models.RoomType).values()}"
+                th:value="${t}" th:text="${t}"></option>
+    </select><br>
+
+    <label for="maxExtraBed">Max Extra Bed:</label><br>
+    <select id="maxExtraBed" th:field="*{maxExtraBed}" th:attr="data-selected=${room.maxExtraBed}">
+    </select><br><br>
+
+    <input type=hidden id="id" th:field="*{id}"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    function updateExtraBedOptions() {
+        const typeSelect = document.getElementById('type');
+        const extraBedSelect = document.getElementById('maxExtraBed');
+        const selectedType = typeSelect.value;
+
+        // Clear options
+        extraBedSelect.innerHTML = '';
+
+        if (selectedType === 'SINGLE') {
+            const option0 = new Option('0', 'NONE');
+            extraBedSelect.add(option0);
+            option0.selected = true;
+        } else {
+            extraBedSelect.add(new Option('0', 'NONE'));
+            extraBedSelect.add(new Option('1', 'ONE'));
+            extraBedSelect.add(new Option('2', 'TWO'));
+        }
+    }
+
+    document.getElementById('type').addEventListener('change', updateExtraBedOptions);
+    window.onload = updateExtraBedOptions;
+</script>
+
+</body>
+</html>

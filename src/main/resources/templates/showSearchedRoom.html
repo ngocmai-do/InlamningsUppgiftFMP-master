@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+
+<h2>Room that matched your search</h2>
+
+<div th:if="${not #lists.isEmpty(allRooms)}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Room Type</th>
+            <th>Max Extra Beds</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${allRooms}">
+            <td th:text="${room.id}"></td>
+            <td th:text="${room.type}"></td>
+            <td th:text="${room.maxExtraBed.value}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${#lists.isEmpty(allRooms)}">
+    <p style="color: red; font-weight: bold;">No available rooms found matching your search criteria.</p>
+</div>
+
+<a th:href="@{/room/search}">
+    <button type="button">Search again</button>
+</a>
+
+</body>
+</html>

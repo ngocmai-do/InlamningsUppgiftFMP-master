@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+
+<h2 th:text="${bookingTitle}"></h2>
+
+<div class="allBookings" th:unless="${#lists.isEmpty(allBookings)}">
+    <table>
+        <thead>
+        <tr>
+            <th th:text="${customerName}"></th>
+            <th th:text="${roomId}"></th>
+            <th th:text="${roomType}"></th>
+            <th th:text="${startDate}"></th>
+            <th th:text="${endDate}"></th>
+            <th th:text="${numberOfNights}"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="booking : ${allBookings}">
+            <td th:text="${booking.customerName}"></td>
+            <td th:text="${booking.roomId}"></td>
+            <td th:text="${booking.roomType}"></td>
+            <td th:text="${booking.startDate}"></td>
+            <td th:text="${booking.endDate}"></td>
+            <td th:text="${booking.numberOfNights}"></td>
+            <td><a th:href="@{/booking/delete/{id}(id=${booking.id})}"><button type="button">Delete</button></a></td>
+            <td><a th:href="@{/booking/edit/{id}(id=${booking.id})}"><button type="button">Edit</button></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a th:href="@{/booking/new}">
+    <button type="button">Add new booking</button>
+</a>
+
+
+
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+<p th:if="${success}" th:text="${success}" style="color:green;"></p>
+
+
+
+</body>
+</html>

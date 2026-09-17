@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+
+<h2 th:text="${roomTitle}"></h2>
+
+<div class="allRooms" th:unless="${#lists.isEmpty(allRooms)}">
+    <table>
+        <thead>
+        <tr>
+            <th th:text="${id}"></th>
+            <th th:text="${type}"></th>
+            <th th:text="${maxExtraBed}"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="room : ${allRooms}">
+            <td th:text="${room.id}"></td>
+            <td th:text="${room.type}"></td>
+            <td th:text="${room.maxExtraBed.value}"></td>
+            <td><a th:href="@{/room/delete/{id}(id=${room.id})}"><button type="button">Delete</button></a></td>
+            <td><a th:href="@{/room/edit/{id}(id=${room.id})}"><button type="button">Edit</button></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<a th:href="@{/room/new}">
+    <button type="button">Add new room</button>
+</a>
+
+<a th:href="@{/room/search}">
+    <button type="button">Search available rooms</button>
+</a>
+
+<script th:if="${error}">
+    alert('Cannot delete room with existing bookings');
+</script>
+
+<script th:if="${success}">
+    alert('Room deleted successfully');
+</script>
+
+</body>
+</html>

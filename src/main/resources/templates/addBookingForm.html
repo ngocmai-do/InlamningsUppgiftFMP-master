@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+<h2>Create a new booking</h2>
+
+<p th:if="${errorMsg}" th:text="${errorMsg}" style="color: red; font-weight: bold;"></p>
+
+<form th:action="@{/booking/create}" th:object="${booking}"  method="post" >
+
+    <label for="customerId">Customer:</label><br>
+
+    <select id="customerId" th:field="*{customerId}">
+        <option th:each="customer : ${customers}"
+                th:value="${customer.id}"
+                th:text="${customer.name}">
+        </option>
+    </select>
+
+    <br>
+
+    <label for="roomId">Room:</label><br>
+    <select id="roomId" th:field="*{roomId}">
+        <option th:each="room : ${rooms}"
+                th:value="${room.id}"
+                th:text="${room.id + ' - ' + room.type}">
+        </option>
+    </select>
+
+    <br>
+
+    <label for="startDate">Check-in Date:</label><br>
+    <input type="date" id="startDate" th:field="*{startDate}"><br>
+
+    <label for="endDate">Check-out Date:</label><br>
+    <input type="date" id="endDate" th:field="*{endDate}"><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

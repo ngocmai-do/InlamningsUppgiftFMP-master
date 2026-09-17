@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+
+<h2>Search available rooms</h2>
+
+<form action="/room/searchedRoom" method="post">
+
+    <label>Check-in date:</label><br>
+    <input type="date" name="startDate"><br><br>
+
+    <label>Check-out date:</label><br>
+    <input type="date" name="endDate"><br><br>
+
+    <label>Guests:</label><br>
+    <input type="number" name="numberOfGuest"><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+
+</body>
+</html>

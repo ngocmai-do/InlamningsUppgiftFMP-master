@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+<h2>Create new customer</h2>
+
+<p th:if="${errorMsg}" th:text="${errorMsg}" style="color: red; font-weight: bold;"></p>
+
+<form action="/customer/update" method="post">
+
+    <label>Name:</label><br>
+    <input type="text" name="name"><br><br>
+
+    <label>Email:</label><br>
+    <input type="text" name="email"><br><br>
+
+    <label>Tel:</label><br>
+    <input type="text" name="tel"><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

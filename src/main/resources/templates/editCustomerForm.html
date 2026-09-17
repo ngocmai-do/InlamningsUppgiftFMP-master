@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FMP Inn</title>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" >🏨 FMP Inn</a>
+    <div class="navbar-links">
+        <a th:href="@{/customer/all}">Customers</a>
+        <a th:href="@{/room/all}">Rooms</a>
+        <a th:href="@{/booking/all}">Bookings</a>
+    </div>
+</nav>
+
+
+<h2>Edit an existing customer</h2>
+
+<p th:if="${errorMsg}" th:text="${errorMsg}" style="color: red; font-weight: bold;"></p>
+
+<form th:action="@{/customer/save}" th:object="${customerDto}" method="post">
+
+    <label for="name">Name:</label><br>
+    <input type="text" th:field="*{name}"
+           th:class="${#fields.hasErrors('name')}? fieldError"
+           id="name" name="name" th:value="${customer?.name}"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="text" th:field="*{email}"
+           th:class="${#fields.hasErrors('email')}? fieldError"
+           id="email" name="email" th:value="${customer?.email}"><br><br>
+
+    <label for="tel">Tel:</label><br>
+    <input type="text" th:field="*{tel}"
+           th:class="${#fields.hasErrors('tel')}? fieldError"
+           id="tel" name="tel" th:value="${customer?.tel}"><br><br>
+
+    <input type="hidden" th:field="*{id}">
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
