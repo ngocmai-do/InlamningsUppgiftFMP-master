@@ -26,6 +26,9 @@ public class InlamningsUppgiftFmpApplication {
     public CommandLineRunner demo(RoomRepo roomRepo, BookingRepo bookingRepo){
         return (args) -> {
 
+            if (roomRepo.count() > 0) {
+                return;
+            }
 
             Room r1 = new Room(RoomType.SINGLE, MaxExtraBed.NONE);
             Room r2 = new Room(RoomType.DOUBLE,MaxExtraBed.ONE);
