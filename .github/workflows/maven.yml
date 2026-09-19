@@ -1,4 +1,4 @@
-name: Java CI integrationTests
+name: Java CI
 
 on:
   push:
