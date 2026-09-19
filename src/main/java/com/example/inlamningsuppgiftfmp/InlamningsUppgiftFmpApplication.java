@@ -22,10 +22,10 @@ public class InlamningsUppgiftFmpApplication {
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }
-    @Bean
-    public CommandLineRunner demo(RoomRepo roomRepo, BookingRepo bookingRepo){
-        return (args) -> {
-
+//    @Bean
+//    public CommandLineRunner demo(RoomRepo roomRepo, BookingRepo bookingRepo){
+//        return (args) -> {
+//
 //            if (roomRepo.count() > 0) {
 //                return;
 //            }
