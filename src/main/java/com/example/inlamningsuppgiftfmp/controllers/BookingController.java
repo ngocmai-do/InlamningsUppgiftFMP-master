@@ -206,13 +206,13 @@ public class BookingController {
             ) != null;
 
             if (!customerExists) {
-                model.addAttribute("errorMsg", "Selected customer does not exist.");
+                model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
                 model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "addBookingForm";
             }
         } catch (HttpClientErrorException.NotFound e) {
-            model.addAttribute("errorMsg", "Selected customer does not exist.");
+            model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
             model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
