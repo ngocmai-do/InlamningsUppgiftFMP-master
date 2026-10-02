@@ -5,6 +5,8 @@ import com.example.inlamningsuppgiftfmp.services.BookingService;
 import com.example.inlamningsuppgiftfmp.services.RoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +29,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BookingController {
 
+    private static final Logger log = LoggerFactory.getLogger(BookingController.class);
+
     private final BookingService bookingService;
     private final RoomService roomService;
     private final RestTemplate restTemplate;
-
-
 
     @RequestMapping("/all")
     public String getAllBooking(Model model) {
@@ -77,7 +79,6 @@ public class BookingController {
         return "booking";
     }
 
-
     @RequestMapping("/delete/{id}")
     public String deleteBooking(@PathVariable Long id){
         bookingService.deleteBooking(id);
@@ -90,7 +91,6 @@ public class BookingController {
         boolean exists = bookingService.bookingExist(id);
         return ResponseEntity.ok(exists);
     }
-
 
     @RequestMapping("/edit/{id}")
     public String createEditBookingForm(@PathVariable Long id, Model model) {
@@ -119,7 +119,6 @@ public class BookingController {
 
         return "editBookingForm";
     }
-
 
     @PostMapping("/update")
     public String updateEditedBooking(@Valid @ModelAttribute("booking") BookingDto bookingDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
@@ -179,7 +178,6 @@ public class BookingController {
         }
     }
 
-
     @RequestMapping("/new")
     public String createAddBookingForm(Model model) {
         model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
@@ -187,7 +185,6 @@ public class BookingController {
         model.addAttribute("booking", new BookingDto());
         return "addBookingForm";
     }
-
 
     @PostMapping("/create")
     public String createNewBooking(@Valid @ModelAttribute("booking") BookingDto bookingDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
@@ -198,7 +195,6 @@ public class BookingController {
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
         }
-
         try {
             boolean customerExists = restTemplate.getForObject(
                     "http://customerservice:8081/customers/" + bookingDto.getCustomerId(),
@@ -206,17 +202,22 @@ public class BookingController {
             ) != null;
 
             if (!customerExists) {
+                log.warn("Booking creation rejected because selected customer does not exist");
                 model.addAttribute("errorMsg", "Selected customer does not exist.");
                 model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "addBookingForm";
             }
+
         } catch (HttpClientErrorException.NotFound e) {
+            log.warn("Booking creation rejected because selected customer was not found");
             model.addAttribute("errorMsg", "Selected customer does not exist.");
             model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
+
         } catch (RestClientException e) {
+            log.error("Could not verify customer because customer service is unavailable", e);
             model.addAttribute("errorMsg", "Customer service is currently unavailable. Please try again later.");
             model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
             model.addAttribute("rooms", roomService.getAllRooms());
@@ -225,13 +226,14 @@ public class BookingController {
 
         try {
             bookingService.createBooking(bookingDto);
+            log.info("Booking created successfully");
             redirectAttributes.addFlashAttribute("success", "Booking created successfully");
+
         } catch (RuntimeException e) {
+            log.error("Failed to create booking", e);
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/booking/all";
     }
-
-
 }
