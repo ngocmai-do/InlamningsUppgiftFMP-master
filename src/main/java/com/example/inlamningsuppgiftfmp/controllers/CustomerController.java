@@ -14,7 +14,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.PrivateKey;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +54,7 @@ public class CustomerController {
     }
 
 
-    @RequestMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes){
         try {
             restTemplate.exchange(
@@ -75,7 +74,7 @@ public class CustomerController {
     }
 
 
-    @RequestMapping("/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String createEditCustomerForm(@PathVariable Long id, Model model) {
 
         try {
