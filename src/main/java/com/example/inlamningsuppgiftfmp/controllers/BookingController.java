@@ -202,6 +202,7 @@ public class BookingController {
             ) != null;
 
             if (!customerExists) {
+                model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
                 log.warn("Booking creation rejected because selected customer does not exist");
                 model.addAttribute("errorMsg", "Selected customer does not exist.");
                 model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
@@ -210,6 +211,7 @@ public class BookingController {
             }
 
         } catch (HttpClientErrorException.NotFound e) {
+            model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
             log.warn("Booking creation rejected because selected customer was not found");
             model.addAttribute("errorMsg", "Selected customer does not exist.");
             model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
