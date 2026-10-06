@@ -46,7 +46,8 @@ public class BookingController {
                     "http://customerservice:8081/customers/all",
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {
+                    }
             );
             List<Map<String, Object>> customers = response.getBody();
 
@@ -61,7 +62,8 @@ public class BookingController {
             bookingDtoList.forEach(b ->
                     b.setCustomerName(customerNames.getOrDefault(b.getCustomerId(), "Unknown"))
             );
-        } catch (RestClientException e) {        // if customer-service is down — show IDs instead of crashing the whole page
+        } catch (
+                RestClientException e) {        // if customer-service is down — show IDs instead of crashing the whole page
             bookingDtoList.forEach(b ->
                     b.setCustomerName("Customer #" + b.getCustomerId() + " (unavailable)")
             );
@@ -71,16 +73,16 @@ public class BookingController {
         model.addAttribute("customerName", "Customer Name");
         model.addAttribute("roomId", "Room ID");
         model.addAttribute("roomType", "Room Type");
-        model.addAttribute("startDate","Check-in Date");
-        model.addAttribute("endDate","Check-out Date");
-        model.addAttribute("numberOfNights","Nights");
+        model.addAttribute("startDate", "Check-in Date");
+        model.addAttribute("endDate", "Check-out Date");
+        model.addAttribute("numberOfNights", "Nights");
         model.addAttribute("bookingTitle", "All Bookings");
 
         return "booking";
     }
 
     @RequestMapping("/delete/{id}")
-    public String deleteBooking(@PathVariable Long id){
+    public String deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return "redirect:/booking/all";
     }
@@ -106,7 +108,8 @@ public class BookingController {
                     "http://customerservice:8081/customers/all",
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {
+                    }
             );
             model.addAttribute("customers", response.getBody());
         } catch (RestClientException e) {
@@ -170,7 +173,8 @@ public class BookingController {
                     "http://customerservice:8081/customers/all",
                     HttpMethod.GET,
                     null,
-                    new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+                    new ParameterizedTypeReference<List<Map<String, Object>>>() {
+                    }
             );
             return response.getBody();
         } catch (RestClientException e) {
@@ -202,24 +206,24 @@ public class BookingController {
             ) != null;
 
             if (!customerExists) {
-                model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
-                log.warn("Booking creation rejected because selected customer does not exist");
-                model.addAttribute("errorMsg", "Selected customer does not exist.");
+                model.addAttribute("errorMsg", "The selected customer does not exist. Failed to create booking.");
+                log.warn("Booking creation was rejected due to the selected customer does not exist");
+                model.addAttribute("errorMsg", "The selected customer does not exist.");
                 model.addAttribute("customers", fetchAllCustomersOrEmpty());
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "addBookingForm";
             }
 
         } catch (HttpClientErrorException.NotFound e) {
-            model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
-            log.warn("Booking creation rejected because selected customer was not found");
-            model.addAttribute("errorMsg", "Selected customer does not exist.");
+            model.addAttribute("errorMsg", "The selected customer does not exist. Failed to create booking.");
+            log.warn("Booking creation rejected due to the selected customer was not found");
+            model.addAttribute("errorMsg", "The selected customer does not exist.");
             model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
 
         } catch (RestClientException e) {
-            log.error("Could not verify customer because customer service is unavailable", e);
+            log.error("Could not verify customer due to customer service is currently unavailable", e);
             model.addAttribute("errorMsg", "Customer service is currently unavailable. Please try again later.");
             model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
