@@ -93,11 +93,11 @@ public class BookingController {
     }
 
     @RequestMapping("/edit/{id}")
-    public String createEditBookingForm(@PathVariable Long id, Model model) {
+    public String createEditBookingForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         Optional<BookingDto> optionalBooking = bookingService.getBookingById(id);
 
         if (optionalBooking.isEmpty()) {
-            model.addAttribute("error", "Booking not found");
+            redirectAttributes.addFlashAttribute("error", "Booking not found");
             return "redirect:/booking/all";
         }
 
