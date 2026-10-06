@@ -34,7 +34,6 @@ public class BookingService {
                 .map(this::toDto);
     }
 
-
     public BookingDto createBooking(BookingDto bookingDto) {
 
         Room room = roomRepo.findById(bookingDto.getRoomId())
@@ -64,7 +63,6 @@ public class BookingService {
 
         return toDto(bookingRepo.save(booking));
     }
-
 
     public Optional<BookingDto> updateBooking(BookingDto bookingDto) {
 
@@ -104,7 +102,6 @@ public class BookingService {
         });
     }
 
-
     public void deleteBooking(Long id) {
         bookingRepo.deleteById(id);
     }
@@ -127,6 +124,4 @@ public class BookingService {
 
         return dto;
     }
-
-
 }
