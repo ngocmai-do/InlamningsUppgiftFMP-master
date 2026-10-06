@@ -101,10 +101,10 @@ Systemet är deployat på Railway: https://inlamningsuppgiftfmp-production.up.ra
 
 ![](https://github.com/ngocmai-do/InlamningsUppgiftFMP-master/blob/master/documentation/merge-conflict4.png)
 
-**Live application:**
----- här finns länken ----
+Live application:
+https://inlamningsuppgiftfmp-master-production-0799.up.railway.app/booking/all
 
-Team workflow
+Team workflow:
 We hold a daily stand-up every day. Each team member answers:
 
 - What did I do since the last stand-up? Anything new that i've learned that i want to share?
@@ -123,7 +123,7 @@ Branches are grouped in two categories Features and fixes
 - fixes are bugfixes - grammar changes etc
 always create new branches for each update from an up-to-date main
 
-From branch to production
+From branch to production:
 
 1. Create a card on the Kanban board with a clear description of what should be done and when it is considered done.
 2. Create a branch from main using the naming convention above.
