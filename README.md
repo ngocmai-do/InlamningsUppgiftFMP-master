@@ -101,4 +101,36 @@ Systemet är deployat på Railway: https://inlamningsuppgiftfmp-production.up.ra
 
 ![](https://github.com/ngocmai-do/InlamningsUppgiftFMP-master/blob/master/documentation/merge-conflict4.png)
 
+**Live application:**
+---- här finns länken ----
+
+Team workflow
+We hold a daily stand-up every day. Each team member answers:
+
+- What did I do since the last stand-up? Anything new that i've learned that i want to share?
+- Am i stuck at anything and might need help?
+- Is anything blocking me?
+with this system we could both keep track on what everyone was doing aswell as learn from eachother.
+
+We tracked our work via the kanban board built into github.
+Backlog → To Do → In Progress → In Review → Done
+A card moves to In Progress when work on it starts, to In Review when a pull request is opened, and to Done when the pull request is merged.
+
+Branch strategy 
+We use a trunk-based strategy. main is the trunk and should always be in a working, deployable state. All work happens in short-lived branches that are merged back into main quickly, ideally within a day or two, to avoid large and risky merges.
+Branches are grouped in two categories Features and fixes
+- features are new features added to the applikation
+- fixes are bugfixes - grammar changes etc
+always create new branches for each update from an up-to-date main
+
+From branch to production
+
+1. Create a card on the Kanban board with a clear description of what should be done and when it is considered done.
+2. Create a branch from main using the naming convention above.
+3. Make the change in small commits with short messages
+4. Open a pull request to main. The description explains what changed, why
+5. Code review: at least one other team member reviews and approves the pull request.
+6. Merge into main once the checks pass and the review is approved. The branch is then deleted.
+7. Deploy to production. The changes are merged to main
+
 
