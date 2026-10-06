@@ -125,7 +125,7 @@ public class BookingController {
         if (bindingResult.hasErrors()) {
             String firstError = bindingResult.getFieldErrors().get(0).getDefaultMessage();
             model.addAttribute("errorMsg", firstError);
-            model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+            model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "editBookingForm";
         }
@@ -138,18 +138,18 @@ public class BookingController {
 
             if (!customerExists) {
                 model.addAttribute("errorMsg", "Selected customer does not exist.");
-                model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+                model.addAttribute("customers", fetchAllCustomersOrEmpty());
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "editBookingForm";
             }
         } catch (HttpClientErrorException.NotFound e) {
             model.addAttribute("errorMsg", "Selected customer does not exist.");
-            model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+            model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "editBookingForm";
         } catch (RestClientException e) {
             model.addAttribute("errorMsg", "Customer service is currently unavailable. Please try again later.");
-            model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+            model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "editBookingForm";
         }
@@ -164,7 +164,7 @@ public class BookingController {
         return "redirect:/booking/all";
     }
 
-    private List<Map<String, Object>> fetchAllCustomersOrEmpty(Model model) {
+    private List<Map<String, Object>> fetchAllCustomersOrEmpty() {
         try {
             ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
                     "http://customerservice:8081/customers/all",
@@ -180,7 +180,7 @@ public class BookingController {
 
     @RequestMapping("/new")
     public String createAddBookingForm(Model model) {
-        model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+        model.addAttribute("customers", fetchAllCustomersOrEmpty());
         model.addAttribute("rooms", roomService.getAllRooms());
         model.addAttribute("booking", new BookingDto());
         return "addBookingForm";
@@ -191,7 +191,7 @@ public class BookingController {
         if (bindingResult.hasErrors()) {
             String firstError = bindingResult.getFieldErrors().get(0).getDefaultMessage();
             model.addAttribute("errorMsg", firstError);
-            model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+            model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
         }
@@ -205,7 +205,7 @@ public class BookingController {
                 model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
                 log.warn("Booking creation rejected because selected customer does not exist");
                 model.addAttribute("errorMsg", "Selected customer does not exist.");
-                model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+                model.addAttribute("customers", fetchAllCustomersOrEmpty());
                 model.addAttribute("rooms", roomService.getAllRooms());
                 return "addBookingForm";
             }
@@ -214,14 +214,14 @@ public class BookingController {
             model.addAttribute("errorMsg", "Selected customer does not exist. Failed to create booking!");
             log.warn("Booking creation rejected because selected customer was not found");
             model.addAttribute("errorMsg", "Selected customer does not exist.");
-            model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+            model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
 
         } catch (RestClientException e) {
             log.error("Could not verify customer because customer service is unavailable", e);
             model.addAttribute("errorMsg", "Customer service is currently unavailable. Please try again later.");
-            model.addAttribute("customers", fetchAllCustomersOrEmpty(model));
+            model.addAttribute("customers", fetchAllCustomersOrEmpty());
             model.addAttribute("rooms", roomService.getAllRooms());
             return "addBookingForm";
         }
