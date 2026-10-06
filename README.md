@@ -82,3 +82,23 @@ Docker / Docker Compose
 RestTemplate (kommunikation mellan tjänster)
 
 Systemet är deployat på Railway: https://inlamningsuppgiftfmp-production.up.railway.app/booking/all
+
+### Merge-konflikten löstes genom följande steg:
+
+1/ Konflikten identifierades i filen BookingController.java där ändringar i felmeddelanden krockade mellan branches.
+
+![](https://github.com/ngocmai-do/InlamningsUppgiftFMP-master/blob/master/documentation/merge-conflict1.png)
+
+2/ I GitHubs webbeditor valdes att behålla och kombenera koden från båda brancherna så att både loggning (log.warn) och de uppdaterade felmeddelandena i model.addAttribute sparades.
+
+![](https://github.com/ngocmai-do/InlamningsUppgiftFMP-master/blob/master/documentation/merge-conflict2.png)
+
+3/ Ändringarna markerades som lösta (Mark as resolved) och genomfördes via Commit merge.
+
+![](https://github.com/ngocmai-do/InlamningsUppgiftFMP-master/blob/master/documentation/merger-conflict3.png)
+
+4/ Slutligen godkändes ändringarna (Changes approved) och alla automatiserade tester/checks passerade så att PR:en kunde mergas utan konflikter.
+
+![](https://github.com/ngocmai-do/InlamningsUppgiftFMP-master/blob/master/documentation/merge-conflict4.png)
+
+
